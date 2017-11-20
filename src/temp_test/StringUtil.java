@@ -1,4 +1,4 @@
-package javaproject;
+package temp_test;
 
 import org.junit.Test;
 
