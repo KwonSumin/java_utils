@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import co.kr.sumin.array.core.ArrayUtil;
 import co.kr.sumin.array.support.basic.InnerAction;
-import co.kr.sumin.array.support.custom.EqualsAction;
+import co.kr.sumin.array.support.extend.EqualsAction;
 
 public class ArrayUtilTest {
 	@Test

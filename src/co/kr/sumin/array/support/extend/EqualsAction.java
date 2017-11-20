@@ -1,4 +1,4 @@
-package co.kr.sumin.array.support.custom;
+package co.kr.sumin.array.support.extend;
 
 import co.kr.sumin.array.support.basic.InnerAction;
 
