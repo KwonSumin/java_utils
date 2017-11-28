@@ -5,9 +5,9 @@ import java.util.Collection;
 
 import org.junit.Test;
 
-import co.kr.sumin.array.core.ArrayUtil;
 import co.kr.sumin.array.support.basic.InnerAction;
 import co.kr.sumin.array.support.extend.EqualsAction;
+import co.kr.sumin.array.util.ArrayUtil;
 
 public class ArrayUtilTest {
 	@Test

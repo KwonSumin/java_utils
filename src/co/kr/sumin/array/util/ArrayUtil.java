@@ -1,4 +1,4 @@
-package co.kr.sumin.array.core;
+package co.kr.sumin.array.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
