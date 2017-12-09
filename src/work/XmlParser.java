@@ -1,4 +1,4 @@
-package temp_test;
+package work;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class XmlParser {
 		Document xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
 		String[] parents = {"note","test1"};
 		System.out.println(XmlParser.setValue(xml, XmlParser.getElement(xml, parents, "inner"), "변경했습니다123"));
-		XmlParser.save(xml);
+		XmlParser.save(xml,"c:/test/xml/test.xml");
 	}
 	public static Element setValue(Document xml,Element element,String value) {
 		element.getFirstChild().setNodeValue(value);
@@ -81,11 +81,11 @@ public class XmlParser {
 		}
 		return true;
 	}
-	public static void save(Document xml) throws TransformerException{
+	public static void save(Document xml,String savePath) throws TransformerException{
     	TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(xml);
-		StreamResult result = new StreamResult(new File("c:/test/xml/test.xml"));
+		StreamResult result = new StreamResult(new File(savePath));
 		transformer.transform(source, result);
 
 		System.out.println("File saved!");
