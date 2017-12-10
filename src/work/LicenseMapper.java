@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface TestMapper {
+public @interface LicenseMapper {
 	String tagLocation();
 	String columId();
 	int startNum() default -1;

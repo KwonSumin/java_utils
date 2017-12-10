@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TestVO {
-	@TestMapper(columId="TO",tagLocation="note/to")
+	@LicenseMapper(columId="TO",tagLocation="note/to")
 	private String to;
-	@TestMapper(columId="FROM",tagLocation="note/from",startNum=1,endNum=10)
+	@LicenseMapper(columId="FROM",tagLocation="note/from",startNum=1,endNum=10)
 	private List<String> from;
 	private HashMap data;
 	

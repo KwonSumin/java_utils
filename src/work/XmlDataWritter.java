@@ -39,7 +39,7 @@ public class XmlDataWritter {
 		Field[] fields = vo.getClass().getDeclaredFields();
 		for(int i=0; i<fields.length; i++){
 			fields[i].setAccessible(true);
-			TestMapper mapper = fields[i].getDeclaredAnnotation(TestMapper.class);
+			LicenseMapper mapper = fields[i].getDeclaredAnnotation(LicenseMapper.class);
 			if(mapper != null) {
 				String[] location = mapper.tagLocation().split("/");
 				String[] parents = new String[location.length-1];
@@ -58,7 +58,7 @@ public class XmlDataWritter {
 		}
 	}
 	public static void foreach(Document xml,Element element,Field field,Collection list){
-		TestMapper mapper = field.getDeclaredAnnotation(TestMapper.class);
+		LicenseMapper mapper = field.getDeclaredAnnotation(LicenseMapper.class);
 		Iterator<String> iter = list.iterator();
 		int count = mapper.startNum();
 		int end = mapper.endNum();
