@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -34,6 +35,83 @@ public class XmlDataWritter {
 
 	}
 	
+	
+	public static void list(Document xml,List list) throws Exception{
+		for(int i=0; i<list.size(); i++) {
+			Object vo = list.get(i);
+		}
+	}
+	
+	private static void reflect(Document xml,Object vo)throws Exception{
+		Field[] fields = vo.getClass().getDeclaredFields();
+		Element groupElement = null;
+		for(int i=0; i<fields.length; i++) {
+			Field field = fields[i];
+			if( field.getName().equals("groupTag") ) {
+				String[] group = String.valueOf(fields[i].get(vo)).split("/");
+				groupElement = getGroupElement(xml,group);
+				continue;
+			}
+			LicenseMapper mapper = field.getAnnotation(LicenseMapper.class);
+			write(xml, mapper, field, vo);
+		}
+		if(groupElement == null) throw new Exception("그룹태그 설정이 잘못 되었습니다.");
+		XmlParser.appendNodeList(groupElement.getChildNodes(), groupElement);
+		
+	}
+	
+	private static Element getGroupElement(Document xml,String[] group) throws Exception{
+		String[] parents = getParents(group);
+		String target = group[group.length-1];
+		return XmlParser.getElement(xml, parents, target);
+	}
+	private static void write(Document xml,LicenseMapper mapper,Field field,Object vo)
+			throws Exception{
+		String[] location = mapper.tagLocation().split("/");
+		String[] parents = getParents(location);
+		String target = location[location.length-1];
+		String data = field.get(vo)==null ? "" : String.valueOf(field.get(vo));
+		Element element = XmlParser.getElement(xml, parents, target);
+		validateWrite(element, data, mapper, field);
+		
+		XmlParser.setValue(xml, element, data);
+		
+	}	
+	
+	private static boolean isEmpty(String data) {
+		if(data ==null || data.equals("")) return true;
+		return false;
+	}
+	
+
+	/*
+	 * 	@description : element, data, mapper 등의 형태에 따른 예외처리.	
+	 */
+	private static void validateWrite(Element element,String data,LicenseMapper mapper,Field field) throws Exception{
+		boolean hasImportant = mapper.xsd().equals("M");
+		boolean isEmptyData = data ==null || data.equals("");
+		boolean hasElement = element !=null;
+		if(hasImportant){
+			if(!hasElement) throw new Exception("필수 항목 엘리먼트가 존재하지 않습니다.\\nlocation : " + mapper.tagLocation());
+			if(isEmptyData) throw new Exception("필수 항목("+field.getName()+") 필드값이 비어 있습니다.\\nlocation : " + mapper.tagLocation());
+		}else{
+			if(!hasElement && !isEmptyData) throw new Exception("엘리먼트가 존재하지 않습니다.\\nlocation : " + mapper.tagLocation());
+		}
+	}
+
+	/*
+	 * 	@description : @LicenseMapper 어노테이션 옵션에서 
+	 * 		마지막 length인 타겟을 제외한 부모 태그를 제외한
+	 * 		부모태그 배열 반환.
+	 */
+	public static String[] getParents(String[] location){;
+		String[] parents =  new String[location.length-1];
+		if(parents.length==0) return null;
+		for(int j=0; j<location.length-1; j++) {
+			parents[j] = location[j];
+		}
+		return parents;
+	}
 	
 	public static void writter(Document xml, TestVO vo) throws Exception{
 		Field[] fields = vo.getClass().getDeclaredFields();

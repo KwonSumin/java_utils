@@ -10,6 +10,8 @@ import java.lang.annotation.Target;
 public @interface LicenseMapper {
 	String tagLocation();
 	String columId();
+	String xsd() default "M";
 	int startNum() default -1;
 	int endNum() default -1;
+
 }
